@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B9D9F322C0373B6000778F1 /* apathy-bgm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0B9D9F312C0373B6000778F1 /* apathy-bgm.mp3 */; };
+		0BB049E62C038109008AFAFE /* FinishFlag.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 0BB049E52C038109008AFAFE /* FinishFlag.usdz */; };
+		0BB049E82C038899008AFAFE /* StartPoint.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 0BB049E72C038899008AFAFE /* StartPoint.rcproject */; };
+		0BB049EA2C0388CD008AFAFE /* ArrowTrack.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 0BB049E92C0388CD008AFAFE /* ArrowTrack.rcproject */; };
 		0BCC00732BFEF5FD00D182D7 /* runforfunApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCC00722BFEF5FD00D182D7 /* runforfunApp.swift */; };
 		0BCC00752BFEF5FD00D182D7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCC00742BFEF5FD00D182D7 /* ContentView.swift */; };
 		0BCC00772BFEF5FE00D182D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BCC00762BFEF5FE00D182D7 /* Assets.xcassets */; };
@@ -25,9 +29,6 @@
 		0BCC00B72C01D89800D182D7 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCC00B62C01D89800D182D7 /* SplashScreenView.swift */; };
 		0BCC00B92C02293C00D182D7 /* tap-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0BCC00B82C02293C00D182D7 /* tap-sound.mp3 */; };
 		0BCC00BB2C02E9BC00D182D7 /* HelveticaNeue-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0BCC00BA2C02E9AC00D182D7 /* HelveticaNeue-Regular.otf */; };
-		0BCC00C62C032BB400D182D7 /* StartLine.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 0BCC00C32C032BB400D182D7 /* StartLine.rcproject */; };
-		0BCC00C72C032BB400D182D7 /* ArrowTrack.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 0BCC00C42C032BB400D182D7 /* ArrowTrack.rcproject */; };
-		0BCC00C92C032CC800D182D7 /* FinishLine.rcproject  in Resources */ = {isa = PBXBuildFile; fileRef = 0BCC00C82C032CC800D182D7 /* FinishLine.rcproject  */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0B9D9F312C0373B6000778F1 /* apathy-bgm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "apathy-bgm.mp3"; sourceTree = "<group>"; };
+		0BB049E52C038109008AFAFE /* FinishFlag.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = FinishFlag.usdz; sourceTree = "<group>"; };
+		0BB049E72C038899008AFAFE /* StartPoint.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; name = StartPoint.rcproject; path = ../../../../../../Downloads/StartPoint.rcproject; sourceTree = "<group>"; };
+		0BB049E92C0388CD008AFAFE /* ArrowTrack.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = ArrowTrack.rcproject; sourceTree = "<group>"; };
 		0BCC006F2BFEF5FD00D182D7 /* runforfun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = runforfun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCC00722BFEF5FD00D182D7 /* runforfunApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = runforfunApp.swift; sourceTree = "<group>"; };
 		0BCC00742BFEF5FD00D182D7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -70,11 +75,6 @@
 		0BCC00B62C01D89800D182D7 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		0BCC00B82C02293C00D182D7 /* tap-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "tap-sound.mp3"; sourceTree = "<group>"; };
 		0BCC00BA2C02E9AC00D182D7 /* HelveticaNeue-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HelveticaNeue-Regular.otf"; sourceTree = "<group>"; };
-		0BCC00C32C032BB400D182D7 /* StartLine.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = StartLine.rcproject; sourceTree = "<group>"; };
-		0BCC00C42C032BB400D182D7 /* ArrowTrack.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = ArrowTrack.rcproject; sourceTree = "<group>"; };
-		0BCC00C82C032CC800D182D7 /* FinishLine.rcproject  */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "FinishLine.rcproject "; sourceTree = "<group>"; };
-		0BCC00CA2C03367300D182D7 /* StartPoint.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = StartPoint.reality; sourceTree = "<group>"; };
-		0BCC00CB2C03367300D182D7 /* FinishPoint.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = FinishPoint.reality; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,13 +185,12 @@
 		0BCC00AE2C01CD1B00D182D7 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				0BCC00CB2C03367300D182D7 /* FinishPoint.reality */,
-				0BCC00CA2C03367300D182D7 /* StartPoint.reality */,
-				0BCC00C82C032CC800D182D7 /* FinishLine.rcproject  */,
-				0BCC00C42C032BB400D182D7 /* ArrowTrack.rcproject */,
-				0BCC00C32C032BB400D182D7 /* StartLine.rcproject */,
-				0BCC00BA2C02E9AC00D182D7 /* HelveticaNeue-Regular.otf */,
+				0BB049E92C0388CD008AFAFE /* ArrowTrack.rcproject */,
+				0BB049E72C038899008AFAFE /* StartPoint.rcproject */,
+				0BB049E52C038109008AFAFE /* FinishFlag.usdz */,
+				0B9D9F312C0373B6000778F1 /* apathy-bgm.mp3 */,
 				0BCC00B82C02293C00D182D7 /* tap-sound.mp3 */,
+				0BCC00BA2C02E9AC00D182D7 /* HelveticaNeue-Regular.otf */,
 				0BCC00B42C01CFFA00D182D7 /* FugazOne-Regular.ttf */,
 				0BCC00AC2C01C98B00D182D7 /* ColorExtensions.swift */,
 				0BCC00762BFEF5FE00D182D7 /* Assets.xcassets */,
@@ -306,8 +305,9 @@
 				0BCC00B52C01CFFA00D182D7 /* FugazOne-Regular.ttf in Resources */,
 				0BCC007A2BFEF5FE00D182D7 /* Preview Assets.xcassets in Resources */,
 				0BCC00B92C02293C00D182D7 /* tap-sound.mp3 in Resources */,
+				0B9D9F322C0373B6000778F1 /* apathy-bgm.mp3 in Resources */,
+				0BB049E62C038109008AFAFE /* FinishFlag.usdz in Resources */,
 				0BCC00BB2C02E9BC00D182D7 /* HelveticaNeue-Regular.otf in Resources */,
-				0BCC00C92C032CC800D182D7 /* FinishLine.rcproject  in Resources */,
 				0BCC00772BFEF5FE00D182D7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,10 +340,10 @@
 				0BCC00B72C01D89800D182D7 /* SplashScreenView.swift in Sources */,
 				0BCC00AB2C01AA7700D182D7 /* AppDelegate.swift in Sources */,
 				0BCC00A52BFF100800D182D7 /* LosePopupView.swift in Sources */,
-				0BCC00C62C032BB400D182D7 /* StartLine.rcproject in Sources */,
 				0BCC00A12BFF0FC100D182D7 /* RunViewModel.swift in Sources */,
 				0BCC00A72BFF102000D182D7 /* StartingRunView.swift in Sources */,
-				0BCC00C72C032BB400D182D7 /* ArrowTrack.rcproject in Sources */,
+				0BB049E82C038899008AFAFE /* StartPoint.rcproject in Sources */,
+				0BB049EA2C0388CD008AFAFE /* ArrowTrack.rcproject in Sources */,
 				0BCC00A32BFF0FEC00D182D7 /* FinishPopupView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -524,9 +524,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = rio.runforfun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
@@ -554,9 +557,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = rio.runforfun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};

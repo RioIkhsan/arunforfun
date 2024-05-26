@@ -8,6 +8,7 @@
 import SwiftUI
 import RealityKit // Import RealityKit for ARView
 import ARKit // Import ARKit for ARWorldTrackingConfiguration
+import AVFoundation // Import AVFoundation for audio playback
 
 class StopwatchManager: ObservableObject {
     @Published var timeString = "00:00:00"
@@ -46,6 +47,34 @@ class StopwatchManager: ObservableObject {
         DispatchQueue.main.async {
             self.timeString = String(format: "%02d:%02d:%02d", minutes, seconds, milliseconds)
         }
+    }
+}
+
+class AudioManager {
+    static let shared = AudioManager()
+    private var backgroundMusicPlayer: AVAudioPlayer?
+    
+    func playBackgroundMusic() {
+        guard let url = Bundle.main.url(forResource: "apathy-bgm", withExtension: "mp3") else {
+            print("Background music file not found")
+            return
+        }
+        
+        do {
+            backgroundMusicPlayer = try AVAudioPlayer(contentsOf: url)
+            backgroundMusicPlayer?.volume = 0.5 // Set volume to 50%
+            backgroundMusicPlayer?.numberOfLoops = -1 // Loop indefinitely
+            backgroundMusicPlayer?.play()
+            print("Background music started")
+        } catch {
+            print("Failed to initialize background music player: \(error.localizedDescription)")
+        }
+    }
+    
+    func stopBackgroundMusic() {
+        backgroundMusicPlayer?.stop()
+        backgroundMusicPlayer = nil
+        print("Background music stopped")
     }
 }
 
@@ -97,13 +126,10 @@ struct ContentView: View {
                         gameSessionActive = true
                         print("Game session started")
                     }) {
-                        Text("Tap to Start")
-                            .font(Font.custom("FugazOne-Regular", size: 36))
-                            .fontWeight(.bold)
+                        Image(systemName: "figure.run.circle.fill")
+                            .font(.system(size: 64))
                             .foregroundColor(.greenPrimary)
                             .padding()
-                            .background(Color.blackBg)
-                            .cornerRadius(25)
                     }
                     .padding(.bottom, 50)
                 }
@@ -124,7 +150,12 @@ struct ContentView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarBackButtonHidden(true)
         .onAppear {
+            AudioManager.shared.playBackgroundMusic()
             print("ContentView appeared")
+        }
+        .onDisappear {
+            AudioManager.shared.stopBackgroundMusic()
+            print("ContentView disappeared")
         }
     }
     

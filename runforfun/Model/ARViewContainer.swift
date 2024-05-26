@@ -57,9 +57,12 @@ struct ARViewContainer: UIViewRepresentable {
         var startPointPlaced = false
         var startPosition: SIMD3<Float>?
         var finishPosition: SIMD3<Float>?
-        var obstacleEntity: ModelEntity?
-        var obstacleAnchor: AnchorEntity?
-        var obstacleTimer: Timer?
+        var obstacleEntity1: ModelEntity?
+        var obstacleEntity2: ModelEntity?
+        var obstacleAnchor1: AnchorEntity?
+        var obstacleAnchor2: AnchorEntity?
+        var obstacleTimer1: Timer?
+        var obstacleTimer2: Timer?
         var playSound: () -> Void
         
         init(_ parent: ARViewContainer, playSound: @escaping () -> Void) {
@@ -90,34 +93,40 @@ struct ARViewContainer: UIViewRepresentable {
                 let position = simd_make_float3(firstResult.worldTransform.columns.3)
                 
                 if !startPointPlaced {
-                    // Place the start point using StartPoint.reality
+                    // Place the start point using StartPoint.rcproject
                     placeEntity(named: "StartPoint", at: position, in: arView)
                     startPosition = position
                     startPointPlaced = true
-                    print("Start Point Placed using StartPoint.reality")
+                    print("Start Point Placed using StartPoint.rcproject")
                     playSound()
                     
-                    // Calculate finish position 2 meters away from start position
-                    let finishPosition = position + SIMD3<Float>(0, 0, -2)
-                    placeEntity(named: "FinishPoint", at: finishPosition, in: arView)
+                    // Calculate finish position with the specified offset
+                    let finishPosition = position + SIMD3<Float>(-0.3, 1.3, -6)
+                    placeModel(named: "FinishFlag", at: finishPosition, in: arView)
                     self.finishPosition = finishPosition
-                    print("Finish Point Placed using FinishPoint.reality")
+                    print("Finish Point Placed using FinishFlag.usdz at \(finishPosition)")
                     playSound()
                     
                     // Place intermediate circles along the path using ArrowTrack.rcproject
                     let numberOfIntermediateCircles = 3
                     for i in 1..<numberOfIntermediateCircles {
                         let fraction = Float(i) / Float(numberOfIntermediateCircles)
-                        let intermediatePosition = position + fraction * SIMD3<Float>(0, 0, -2)
+                        let intermediatePosition = position + fraction * SIMD3<Float>(0, 0, -6)
                         placeEntity(named: "ArrowTrack", at: intermediatePosition, in: arView)
                         print("Intermediate Point \(i) Placed using ArrowTrack.rcproject")
                         playSound()
                     }
                     
-                    // Place an obstacle in the path
-                    let obstaclePosition = position + SIMD3<Float>(0, 0, -1)
-                    placeAndAnimateObstacle(at: obstaclePosition, in: arView)
-                    print("Obstacle Placed and Animated")
+                    // Place the first obstacle in the path
+                    let obstaclePosition1 = position + SIMD3<Float>(0, 0, -2)
+                    placeAndAnimateObstacle1(at: obstaclePosition1, in: arView)
+                    print("Obstacle 1 Placed and Animated")
+                    playSound()
+                    
+                    // Place the second obstacle in the path
+                    let obstaclePosition2 = obstaclePosition1 + SIMD3<Float>(0, 0, -2)
+                    placeAndAnimateObstacle2(at: obstaclePosition2, in: arView)
+                    print("Obstacle 2 Placed and Animated")
                     playSound()
                     
                     // Show the start button and stopwatch after all objects are placed
@@ -139,7 +148,7 @@ struct ARViewContainer: UIViewRepresentable {
             }
         }
         
-        // Place an entity from a .reality or .rcproject file at the specified position
+        // Place an entity from an .rcproject file at the specified position
         private func placeEntity(named name: String, at position: SIMD3<Float>, in arView: ARView) {
             guard let entity = try? Entity.load(named: name) else {
                 print("Failed to load entity: \(name)")
@@ -150,69 +159,117 @@ struct ARViewContainer: UIViewRepresentable {
             arView.scene.addAnchor(anchorEntity)
         }
         
-        // Place and animate an obstacle at the specified position
-        private func placeAndAnimateObstacle(at position: SIMD3<Float>, in arView: ARView) {
+        // Place a model from a .usdz file at the specified position
+        private func placeModel(named name: String, at position: SIMD3<Float>, in arView: ARView) {
+            guard let modelEntity = try? Entity.loadModel(named: name) else {
+                print("Failed to load model: \(name)")
+                return
+            }
             let anchorEntity = AnchorEntity(world: position)
-            let cube = MeshResource.generateBox(size: [0.2, 0.5, 0.2])  // Adjusted size to make the cube taller
-            let material = SimpleMaterial(color: .gray, isMetallic: false)
+            anchorEntity.addChild(modelEntity)
+            arView.scene.addAnchor(anchorEntity)
+        }
+        
+        // Place and animate the first obstacle at the specified position
+        private func placeAndAnimateObstacle1(at position: SIMD3<Float>, in arView: ARView) {
+            let anchorEntity = AnchorEntity(world: position)
+            let cube = MeshResource.generateBox(size: [0.7, 1.6, 0.7])  // Adjusted size of the cube
+            let material = SimpleMaterial(color: .black, isMetallic: true)  // Adjusted color and material
             let modelEntity = ModelEntity(mesh: cube, materials: [material])
             
             anchorEntity.addChild(modelEntity)
             arView.scene.addAnchor(anchorEntity)
             
-            obstacleEntity = modelEntity
-            obstacleAnchor = anchorEntity
+            obstacleEntity1 = modelEntity
+            obstacleAnchor1 = anchorEntity
             
-            startObstacleAnimation()
+            startObstacleAnimation1()
         }
         
-        // Start the obstacle animation
-        private func startObstacleAnimation() {
-            guard let obstacleEntity = obstacleEntity else { return }
+        // Start the animation for the first obstacle
+        private func startObstacleAnimation1() {
+            guard let obstacleEntity = obstacleEntity1 else { return }
             
             var direction: Float = 1.0
-            let moveDistance: Float = 0.5
+            let moveDistance: Float = 1.0
             let duration: TimeInterval = 1.0
             
-            obstacleTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: true) { _ in
+            obstacleTimer1 = Timer.scheduledTimer(withTimeInterval: duration, repeats: true) { _ in
                 let currentPosition = obstacleEntity.position
-                let newPosition = SIMD3<Float>(currentPosition.x + direction * moveDistance, currentPosition.y, currentPosition.z)
+                let newPosition = SIMD3<Float>(direction * moveDistance, currentPosition.y, currentPosition.z)
                 obstacleEntity.move(to: Transform(translation: newPosition), relativeTo: obstacleEntity.parent, duration: duration)
                 
                 direction *= -1.0
-                print("Obstacle animated to new position: \(newPosition)")
+                print("Obstacle 1 animated to new position: \(newPosition)")
             }
         }
         
-        // Stop the obstacle animation
-        func stopObstacleAnimation() {
-            obstacleTimer?.invalidate()
-            obstacleTimer = nil
-            print("Obstacle animation stopped")
+        // Place and animate the second obstacle at the specified position
+        private func placeAndAnimateObstacle2(at position: SIMD3<Float>, in arView: ARView) {
+            let anchorEntity = AnchorEntity(world: position)
+            let cube = MeshResource.generateBox(size: [0.7, 1.6, 0.7])  // Adjusted size of the cube
+            let material = SimpleMaterial(color: .black, isMetallic: true)  // Adjusted color and material
+            let modelEntity = ModelEntity(mesh: cube, materials: [material])
+            
+            anchorEntity.addChild(modelEntity)
+            arView.scene.addAnchor(anchorEntity)
+            
+            obstacleEntity2 = modelEntity
+            obstacleAnchor2 = anchorEntity
+            
+            startObstacleAnimation2()
+        }
+        
+        // Start the animation for the second obstacle
+        private func startObstacleAnimation2() {
+            guard let obstacleEntity = obstacleEntity2 else { return }
+            
+            var direction: Float = 1.0
+            let moveDistance: Float = 1.0
+            let duration: TimeInterval = 0.5 // Faster animation
+            
+            obstacleTimer2 = Timer.scheduledTimer(withTimeInterval: duration, repeats: true) { _ in
+                let currentPosition = obstacleEntity.position
+                let newPosition = SIMD3<Float>(direction * moveDistance, currentPosition.y, currentPosition.z)
+                obstacleEntity.move(to: Transform(translation: newPosition), relativeTo: obstacleEntity.parent, duration: duration)
+                
+                direction *= -1.0
+                print("Obstacle 2 animated to new position: \(newPosition)")
+            }
+        }
+        
+        // Stop all obstacle animations
+        func stopObstacleAnimations() {
+            obstacleTimer1?.invalidate()
+            obstacleTimer1 = nil
+            obstacleTimer2?.invalidate()
+            obstacleTimer2 = nil
+            print("Obstacle animations stopped")
         }
         
         // AR session callback for frame updates
         func session(_ session: ARSession, didUpdate frame: ARFrame) {
-            guard let finishPosition = finishPosition, let obstacleAnchor = obstacleAnchor, let cameraTransform = session.currentFrame?.camera.transform else { return }
+            guard let finishPosition = finishPosition, let obstacleAnchor1 = obstacleAnchor1, let obstacleAnchor2 = obstacleAnchor2, let cameraTransform = session.currentFrame?.camera.transform else { return }
             let cameraPosition = SIMD3<Float>(cameraTransform.columns.3.x, cameraTransform.columns.3.y, cameraTransform.columns.3.z)
             
             let distanceToFinish = simd_distance(cameraPosition, finishPosition)
-            let distanceToObstacle = simd_distance(cameraPosition, obstacleAnchor.transform.translation)
+            let distanceToObstacle1 = simd_distance(cameraPosition, obstacleAnchor1.transform.translation)
+            let distanceToObstacle2 = simd_distance(cameraPosition, obstacleAnchor2.transform.translation)
             
             // Check if the player has reached the finish point
             if distanceToFinish < 0.5 { // threshold to detect arrival
                 DispatchQueue.main.async {
-                    self.stopObstacleAnimation()
+                    self.stopObstacleAnimations()
                     self.parent.stopwatchManager.stop()
                     print("Arrived at Finish Point")
                     self.parent.onFinish()
                 }
             }
             
-            // Check if the player has collided with the obstacle
-            if self.parent.gameSessionActive && distanceToObstacle < 0.01 { // threshold to detect collision
+            // Check if the player has collided with any obstacle
+            if self.parent.gameSessionActive && (distanceToObstacle1 < 0.01 || distanceToObstacle2 < 0.01) { // threshold to detect collision
                 DispatchQueue.main.async {
-                    self.stopObstacleAnimation()
+                    self.stopObstacleAnimations()
                     self.parent.stopwatchManager.stop()
                     print("Collided with Obstacle")
                     self.parent.onLose()
